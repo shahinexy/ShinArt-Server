@@ -36,6 +36,12 @@ async function run() {
             res.send(result)
         })
 
+        app.get('/art&craft', async(req, res)=>{
+            const cursor = artAndcraftCollection.find()
+            const result = await cursor.toArray()
+            res.send(result)
+        })
+
         await client.db("admin").command({ ping: 1 });
         console.log("Pinged your deployment. You successfully connected to MongoDB!");
     } finally {
