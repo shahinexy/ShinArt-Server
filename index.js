@@ -42,6 +42,14 @@ async function run() {
             res.send(result)
         })
 
+        app.get('/art&craft/:loginEmail', async(req, res)=>{
+            const email = req.params.loginEmail;
+            console.log(email);
+            const filter = {loginEmail: email};
+            const result = await artAndcraftCollection.find(filter).toArray();
+            res.send(result)
+        })
+
         await client.db("admin").command({ ping: 1 });
         console.log("Pinged your deployment. You successfully connected to MongoDB!");
     } finally {
