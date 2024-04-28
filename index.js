@@ -46,7 +46,7 @@ async function run() {
             const query = { _id: new ObjectId(id) }
             const result = await artAndcraftCollection.findOne(query)
             res.send(result)
-          })
+        })
 
 
         app.get('/art&craft/uid/:loginUid', async (req, res) => {
@@ -56,9 +56,31 @@ async function run() {
             res.send(result)
         })
 
-        app.delete('/art&craft/id/:id', async (req,res)=>{
+        app.put('/art&craft/id/:id', async (req, res) => {
             const id = req.params.id;
-            const query = {_id: new ObjectId(id)}
+            const data = req.body;
+            const query = { _id: new ObjectId(id) }
+            const options = { upsert: true };
+            const updateData = {
+                $set: {
+                    photo: data.photo,
+                    item_name: data.item_name,
+                    subcategory_Name: data.subcategory_Name,
+                    price: data.price,
+                    rating: data.rating,
+                    customization: data.customization,
+                    processing_time: data.processing_time,
+                    stockStatus: data.stockStatus,
+                    description: data.description,
+                }
+            }
+            const result = await artAndcraftCollection.updateOne(query, updateData, options)
+            res.send(result)
+        })
+
+        app.delete('/art&craft/id/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) }
             console.log(id, query);
             const result = await artAndcraftCollection.deleteOne(query)
             res.send(result)
