@@ -44,7 +44,6 @@ async function run() {
         app.get('/art&craft/id/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: new ObjectId(id) }
-            console.log(id, query);
             const result = await artAndcraftCollection.findOne(query)
             res.send(result)
           })
@@ -57,6 +56,13 @@ async function run() {
             res.send(result)
         })
 
+        app.delete('/art&craft/id/:id', async (req,res)=>{
+            const id = req.params.id;
+            const query = {_id: new ObjectId(id)}
+            console.log(id, query);
+            const result = await artAndcraftCollection.deleteOne(query)
+            res.send(result)
+        })
 
         await client.db("admin").command({ ping: 1 });
         console.log("Pinged your deployment. You successfully connected to MongoDB!");
