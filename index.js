@@ -50,10 +50,9 @@ async function run() {
           })
 
 
-        app.get('/art&craft/email/:loginEmail', async (req, res) => {
-            const email = req.params.loginEmail;
-            console.log("user Email",email);
-            const filter = { loginEmail: email };
+        app.get('/art&craft/uid/:loginUid', async (req, res) => {
+            const uid = req.params.loginUid;
+            const filter = { loginUid: uid };
             const result = await artAndcraftCollection.find(filter).toArray();
             res.send(result)
         })
