@@ -41,20 +41,23 @@ async function run() {
             res.send(result)
         })
 
-        app.get('/art&craft/:loginEmail', async (req, res) => {
+        app.get('/art&craft/id/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) }
+            console.log(id, query);
+            const result = await artAndcraftCollection.findOne(query)
+            res.send(result)
+          })
+
+
+        app.get('/art&craft/email/:loginEmail', async (req, res) => {
             const email = req.params.loginEmail;
+            console.log("user Email",email);
             const filter = { loginEmail: email };
             const result = await artAndcraftCollection.find(filter).toArray();
             res.send(result)
         })
 
-        app.get('/art&craft/:id', async (req, res) => {
-            const id = req.params.id;
-            console.log(id);
-            const quary = { _id: new ObjectId(id) };
-            const result = await artAndcraftCollection.findOne(quary);
-            res.send(result)
-        })
 
         await client.db("admin").command({ ping: 1 });
         console.log("Pinged your deployment. You successfully connected to MongoDB!");
