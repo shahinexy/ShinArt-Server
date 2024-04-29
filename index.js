@@ -28,6 +28,7 @@ async function run() {
         // await client.connect();
 
         const artAndcraftCollection = client.db("art&craftDB").collection("art&craft");
+        const categoryCollection = client.db("art&craftDB").collection("category");
 
         app.post('/art&craft', async (req, res) => {
             const newItem = req.body;
@@ -74,6 +75,7 @@ async function run() {
                     description: data.description,
                 }
             }
+
             const result = await artAndcraftCollection.updateOne(query, updateData, options)
             res.send(result)
         })
@@ -83,6 +85,28 @@ async function run() {
             const query = { _id: new ObjectId(id) }
             console.log(id, query);
             const result = await artAndcraftCollection.deleteOne(query)
+            res.send(result)
+        })
+
+        // fore categories collection API
+        app.get('/category', async (req, res) => {
+            const cursor = categoryCollection.find()
+            console.log("cetegory", cursor);
+            const result = await cursor.toArray()
+            res.send(result)
+        })
+
+        app.get('/category/:type', async(req, res)=>{
+            const type = req.params.type;
+            const query = { subcategory_Name: type }
+            const result = await categoryCollection.findOne(query)
+            res.send(result)
+        })
+
+        app.post('/category', async (req, res) => {
+            const newItem = req.body;
+            console.log('cetegory', newItem);
+            const result = await categoryCollection.insertOne(newItem)
             res.send(result)
         })
 
