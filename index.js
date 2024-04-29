@@ -90,7 +90,6 @@ async function run() {
         // fore categories collection API
         app.get('/category', async (req, res) => {
             const cursor = categoryCollection.find()
-            console.log("cetegory", cursor);
             const result = await cursor.toArray()
             res.send(result)
         })
@@ -104,7 +103,6 @@ async function run() {
 
         app.post('/category', async (req, res) => {
             const newItem = req.body;
-            console.log('cetegory', newItem);
             const result = await categoryCollection.insertOne(newItem)
             res.send(result)
         })
