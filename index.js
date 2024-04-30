@@ -7,6 +7,14 @@ const port = process.env.PORT || 5000;
 
 //middleware
 app.use(cors());
+
+// const corsConfig = {
+//     origin: ["http://localhost:5173"],
+//     credentials: true,
+//     methods: ['GET', 'POST', 'PUT', 'DELETE']
+// };
+// app.use(cors(corsConfig));
+
 app.use(express.json());
 
 
@@ -91,7 +99,7 @@ async function run() {
             res.send(result)
         })
 
-        app.get('/category/:type', async(req, res)=>{
+        app.get('/category/:type', async (req, res) => {
             const type = req.params.type;
             const query = { subcategory_Name: type }
             const result = await categoryCollection.findOne(query)
